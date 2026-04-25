@@ -1,29 +1,29 @@
 # Air Mouse
 
-Controle seu computador com gestos de mão capturados pela webcam — sem tocar no teclado ou mouse.
+Control your computer with hand gestures captured via webcam — no need to touch the keyboard or mouse.
 
-## Gestos
+## Gestures
 
-| Gesto | Ação |
-|-------|------|
-| ☝️✌️ Dois dedos para cima, movendo | Scroll (sobe/desce conforme direção) |
-| 🤏 Pinça (polegar + indicador se tocam) | Minimizar janela ativa |
-| ✊ Punho fechado | Fechar janela ativa |
+| Gesture | Action |
+|---------|--------|
+| ☝️✌️ Two fingers moving up | Scroll (up/down based on direction) |
+| 🤏 Pinch (thumb + index finger touch) | Minimize active window |
+| ✊ Closed fist | Close active window |
 
-> **Atenção:** o gesto de fechar janela tem debounce de 2 segundos para evitar acidentes.
+> **Warning:** the close window gesture has a 2-second debounce to prevent accidents.
 
-## Requisitos
+## Requirements
 
 - Python 3.10+
-- [uv](https://github.com/astral-sh/uv) (gerenciador de pacotes)
-- Linux: `xdotool` instalado
+- [uv](https://github.com/astral-sh/uv) (package manager)
+- Linux: `xdotool` installed
 
 ```bash
 # Linux
 sudo apt install xdotool
 ```
 
-## Instalação
+## Installation
 
 ```bash
 git clone <repo>
@@ -36,29 +36,29 @@ source .venv/bin/activate   # Linux/macOS
 uv pip install -r requirements.txt
 ```
 
-## Uso
+## Usage
 
 ```bash
-# Modo silencioso (background, sem janela)
+# Silent mode (background, no window)
 python main.py
 
-# Modo showcase (janela com overlay dos landmarks)
+# Showcase mode (window with landmark overlay)
 python main.py --showcase
 
-# Opções
-python main.py --cam 1          # usar câmera de índice 1
-python main.py --sensitivity 50 # scroll mais rápido (default: 30)
+# Options
+python main.py --cam 1          # use camera device index 1
+python main.py --sensitivity 50 # faster scrolling (default: 30)
 ```
 
-Pressione `q` ou `ESC` para sair do modo showcase.  
-Pressione `Ctrl+C` para sair do modo silencioso.
+Press `q` or `ESC` to exit showcase mode.  
+Press `Ctrl+C` to exit silent mode.
 
-## Como funciona
+## How it works
 
-O projeto usa [MediaPipe Hands](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker) para detectar 21 pontos da mão em tempo real via webcam. A partir desses pontos, são identificados três gestos:
+The project uses [MediaPipe Hands](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker) to detect 21 hand landmarks in real-time via webcam. Three gestures are identified based on these landmarks:
 
-- **Scroll**: indicador e médio levantados se movem — o delta vertical é convertido em scroll da página.
-- **Pinça**: distância entre polegar e indicador abaixo de um limiar → `xdotool key super+Down`.
-- **Punho**: todas as pontas dos dedos abaixo das juntas → `xdotool key alt+F4`.
+- **Scroll**: index and middle fingers raised and moving — the vertical delta is converted to page scroll.
+- **Pinch**: distance between thumb and index finger below a threshold → `xdotool key super+Down`.
+- **Fist**: all finger tips below their respective knuckles → `xdotool key alt+F4`.
 
-No modo showcase, os landmarks são desenhados sobre o feed da webcam com cores que indicam o gesto ativo.
+In showcase mode, the landmarks are drawn over the webcam feed with colors indicating the active gesture.
